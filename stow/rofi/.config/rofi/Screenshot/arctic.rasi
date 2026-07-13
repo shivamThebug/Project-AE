@@ -1,0 +1,51 @@
+/* ====================================================
+   ROFI SCREENSHOT THEME (Clean Context Menu Variant)
+======================================================= */
+
+* {
+    bg-main:          #3B4252;
+    border-color:     #4C566A;
+    accent:           #88C0D0;
+    button-bg:        #3B4252;
+    text-main:        #D8DEE9;
+    
+    background-color: transparent;
+    text-color:       @text-main;
+    font:             "SF Pro Display 13";
+}
+
+window {
+    background-color: @bg-main;
+    border:           3px;
+    border-color:     @border-color;
+    border-radius:    10px;
+    width:            280px; /* Slimmer look since there is no typing bar */
+    location:         center;
+    anchor:           center;
+}
+
+mainbox {
+    children: [ listview ]; /* Removed inputbar from here */
+    padding: 10px;
+}
+
+listview {
+    lines:          3; /* Clean fit for the 3 choices */
+    columns:        1;
+    scrollbar:      false;
+    spacing:        5px;
+}
+
+element {
+    padding:       10px;
+    border-radius: 6px;
+}
+
+element-text {
+    text-color: inherit;
+}
+
+element selected {
+    background-color: @accent;
+    text-color:       #ffffff;
+}

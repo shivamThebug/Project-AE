@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# --- 1. SELECT TARGET AREA ---
+opt_screen="󰹑   Fullscreen"
+opt_area="󰆞   Select Area"
+opt_window="󱂬   Active Window"
+
+# Changed the -theme flag to point to the dynamically managed config folder
+target=$(echo -e "$opt_screen\n$opt_area\n$opt_window" | rofi -dmenu -p "Capture" -theme ~/.config/rofi/screenshot.rasi)
+
+# Exit if user hits escape
+[[ -z "$target" ]] && exit 1
+
+# --- 2. SELECT ACTION ---
+act_copy="󰆏   Copy to Clipboard"
+act_save="󰉋   Save to Folder"
+act_both="󰆓   Copy & Save"
+
+# Changed the -theme flag to point to the dynamically managed config folder
+action=$(echo -e "$act_both\n$act_copy\n$act_save" | rofi -dmenu -p "Action" -theme ~/.config/rofi/screenshot.rasi)
+
+[[ -z "$action" ]] && exit 1
+
+# --- 3. SET UP FILE PATHS ---
+dir="$HOME/Pictures/Screenshots"
+file="Screenshot_$(date +%Y%m%d_%H%M%S).png"
+temp_file="/tmp/$file"
+final_target="$dir/$file"
+
+# --- 4. EXECUTE GRIM BASED ON TARGET ---
+case "$target" in
+    "$opt_screen")
+        sleep 0.2 && grim "$temp_file"
+        ;;
+    "$opt_area")
+        grim -g "$(slurp)" "$temp_file"
+        ;;
+    "$opt_window")
+        active_win=$(hyprctl activewindow -j)
+        box=$(echo "$active_win" | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
+        grim -g "$box" "$temp_file"
+        ;;
+    *)
+        exit 1
+        ;;
+esac
+
+# Check if grim actually captured something (handles user cancelling slurp escape)
+[[ ! -f "$temp_file" ]] && exit 1
+
+# --- 5. PROCESS ACTION ---
+case "$action" in
+    "$act_copy")
+        wl-copy < "$temp_file"
+        rm "$temp_file"
+        ;;
+    "$act_save")
+        mkdir -p "$dir"
+        mv "$temp_file" "$final_target"
+        ;;
+    "$act_both")
+        mkdir -p "$dir"
+        cp "$temp_file" "$final_target"
+        wl-copy < "$temp_file"
+        rm "$temp_file"
+        ;;
+esac
+
+exit 0

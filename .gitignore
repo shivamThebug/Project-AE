@@ -1,0 +1,5 @@
+*.bak
+*.bak.*
+.current_theme
+.theme-switcher.log
+fish_variables

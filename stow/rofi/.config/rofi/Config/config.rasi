@@ -1,0 +1,5 @@
+configuration {
+    modi: "drun,run,window";
+    drun-match-fields: "name";
+    drun-display-format: "{name}";
+}

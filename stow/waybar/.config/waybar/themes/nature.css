@@ -1,0 +1,122 @@
+/* --- Global Settings --- */
+* {
+    border: none;
+    border-radius: 10px;
+    font-family: "SF Pro Display", "JetBrainsMono Nerd Font";
+    font-size: 13px;
+    margin: 0;
+    min-height: 0;
+    padding: 0;
+}
+
+window#waybar {
+    background: transparent;
+    margin: 0 100px;
+}
+
+/* --- Tooltips --- */
+tooltip {
+    background: #F2EDC2;
+    border: 3px solid #346739;
+    border-radius: 10px;
+}
+
+tooltip label {
+    color: #121212;
+    padding: 6px 10px;
+}
+
+/* --- Workspaces Module --- */
+#workspaces {
+    background: #F2EDC2;
+    margin: 0;
+    padding: 5px 5px;
+    border: 3px solid #346739;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    margin: 0 2px;
+    border-radius: 5px;
+    background: #79AE6F;
+    color: #EAE8EA;
+    transition: all 180ms ease-in-out;
+}
+
+#workspaces button:hover {
+    background: #C1440E;
+}
+
+#workspaces button.active {
+    min-width: 40px;
+    border-radius: 6px;
+    background: #346739;
+    color: #1a1a2e;
+    font-weight: 600;
+}
+
+/* --- Clock Module --- */
+#clock {
+    font-weight: 500;
+    background-color: #79AE6F;
+    border-radius: 5px;
+    color: #121212;
+    padding: 3px 16px;
+    border: none;
+}
+
+/* --- Container Styling --- */
+.modules-center {
+    background-color: #F2EDC2;
+    color: #346739;
+    margin: 0;
+    padding: 5px 5px;
+    border: 3px solid #346739;
+}
+
+.modules-right {
+    margin: 0;
+    padding: 5px 5px;
+    border: 3px solid #346739;
+    background: #F2EDC2;
+}
+
+/* --- Isolated Left Apps Box Group --- */
+#apps {
+    background-color: #F2EDC2;
+    margin: 0;
+    padding: 5px 5px;
+    border: 3px solid #346739;
+    border-radius: 10px;
+}
+
+/* --- Right Side Modules & Inner Left App Button --- */
+#pulseaudio,
+#network,
+#battery,
+#custom-power,
+#custom-app,
+#apps #custom-app,
+#backlight,
+#custom-swaync {
+    font-weight: 500;
+    background-color: #79AE6F;
+    border-radius: 5px;
+    color: #121212;
+    padding: 3px 16px;
+    border: none;
+}
+
+#custom-power {
+    min-width: 10px;
+}
+
+/* --- Battery States --- */
+#battery.warning {
+    color: #C1440E;
+}
+
+#battery.critical {
+    background-color: #C1440E;
+    color: #F1E6D0;
+}

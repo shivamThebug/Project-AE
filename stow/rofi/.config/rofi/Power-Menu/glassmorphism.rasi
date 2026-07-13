@@ -1,0 +1,96 @@
+/* ====================================================
+   WAYBAR PORT TO ROFI (FOGGY / GRAY BUTTON THEME)
+   ==================================================== */
+
+* {
+    /* --- Global Settings --- */
+    font:            "SF Pro Display, JetBrainsMono Nerd Font 13";
+    background-color: transparent;
+    margin:          0;
+    padding:         0;
+
+    /* Main Container (From Waybar .modules-right / #workspaces) */
+    bg-container:    rgba(255, 255, 255, 0.10); 
+    border-container: rgba(255, 255, 255, 0.22); 
+    
+    /* Foggy Button Borders (From Waybar module borders) */
+    border-item:     rgba(255, 255, 255, 0.18);
+    
+    /* Text Colors (Muted foggy gray for normal, dark contrast for active) */
+    text-normal:     rgba(255, 255, 255, 0.75); /* Matched to Waybar's button color */
+    text-active:     #1A1A2E;                   /* Matched to Waybar's active button text */
+}
+
+window {
+    background-color: @bg-container;
+    border:           1px;
+    border-color:     @border-container;
+    border-radius:    16px;          
+    width:            320px;       
+    
+    location:         northeast;
+    anchor:           northeast;
+    margin:           20px 20px 0px 0px; 
+}
+
+mainbox {
+    children:         [ listview ];
+    padding:          14px;          /* Preserved comfortable layout bounds */
+    background-color: transparent;
+}
+
+listview {
+    lines:            5;
+    columns:          1;
+    scrollbar:        false;
+    spacing:          10px;          /* Preserved comfortable gap spacing */
+    background-color: transparent;
+}
+
+element {
+    padding:          10px 18px;     /* LOCKED: Maintained original comfortable button size */
+    
+    /* Foggy/Gray effect: Blending Waybar's 0.12 module background into a 0.08 button baseline */
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08));
+    
+    border:           1px;
+    border-color:     @border-item;
+    border-radius:    10px;          /* Matched your module inner button radius */
+    text-color:       @text-normal;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+    font-weight:      500;           
+}
+
+element-icon {
+    background-color: transparent;
+    text-color:       inherit;
+    size:             1.2em;
+}
+
+element selected {
+    /* Matched precisely to your high-contrast "#workspaces button.active" */
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.30));
+    border:           1px;
+    border-color:     rgba(255, 255, 255, 0.45); 
+    text-color:       @text-active;
+}
+
+element-text selected {
+    font-weight:      600;           /* Matched active button bolding */
+}
+
+/* --- Special Optional States --- */
+element urgent {
+    background-color: rgba(255, 90, 90, 0.35);
+    border-color:     rgba(255, 90, 90, 0.5);
+    text-color:       #FFFFFF;
+}
+
+element active {
+    text-color:       #FFD479;
+}

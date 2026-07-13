@@ -1,0 +1,64 @@
+/* ====================================================
+   WAYBAR PORT TO ROFI (EARTHY GREEN / OLIVE THEME)
+   SCREENSHOT MENU VARIANT
+   ==================================================== */
+* {
+    font:               "SF Pro Display, JetBrainsMono Nerd Font 13";
+    background-color:   transparent;
+    margin:             0;
+    padding:            0;
+    bg-container:       #F2EDC2;
+    border-container:   #346739;
+    bg-item:            #79AE6F;
+    text-normal:        #121212;
+    bg-active:          #346739;
+    text-active:         #1a1a2e;
+}
+window {
+    background-color:  @bg-container;
+    border:            3px;
+    border-color:      @border-container;
+    border-radius:     10px;
+    width:             280px;
+    location:          center;
+    anchor:            center;
+}
+mainbox {
+    children:          [ listview ];
+    padding:           14px;
+    background-color:  transparent;
+}
+listview {
+    lines:             3;
+    columns:           1;
+    scrollbar:         false;
+    spacing:           10px;
+    background-color:  transparent;
+}
+element {
+    padding:           10px 18px;
+    background-color:  @bg-item;
+    border:            none;
+    border-radius:     5px;
+    text-color:        @text-normal;
+}
+element-text {
+    background-color:  transparent;
+    text-color:        inherit;
+    vertical-align:    0.5;
+    font-weight:       500;
+}
+element-icon {
+    background-color:  transparent;
+    text-color:        inherit;
+    size:              1.2em;
+}
+element selected {
+    background-color:  @bg-active;
+    border:            none;
+    border-radius:     6px;
+    text-color:        @text-active;
+}
+element-text selected {
+    font-weight:       600;
+}

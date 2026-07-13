@@ -1,0 +1,17 @@
+/* Style the entire control center container box */
+.control-center {
+    border-radius: 16px;      /* Sharp or ultra-rounded corners */
+    padding: 20px;
+}
+
+/* Force the volume & brightness sliders to look exactly how you want */
+scale trough {
+    min-height: 10px;         /* Thickness of the slider bar line */
+    border-radius: 5px;
+    background-color: #333333; 
+}
+
+scale highlight {
+    border-radius: 5px;
+    background-color: #88BDA4; /* Color of the filled slider area */
+}

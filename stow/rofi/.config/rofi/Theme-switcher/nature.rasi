@@ -1,0 +1,64 @@
+/* --- App Launcher Theme (Earthy Green / Olive) --- */
+* {
+    bg-main:       #F2EDC2;
+    border-color:  #346739;
+    accent:        #346739;
+    button-bg:     #79AE6F;
+    text-main:     #121212;
+    text-active:   #1a1a2e;
+    background-color: transparent;
+    text-color:       @text-main;
+    font:             "SF Pro Display, JetBrainsMono Nerd Font 13";
+}
+window {
+    background-color: @bg-main;
+    border:           3px;
+    border-color:     @border-color;
+    border-radius:    10px;
+    width:            700px;
+    location:         center;
+    anchor:           center;
+    margin:           20px 20px 0px 0px;
+}
+configuration {
+    display-drun: "Apps";
+    show-icons: true;
+}
+mainbox {
+    children: [ inputbar, listview ];
+    padding: 10px;
+}
+inputbar {
+    padding: 10px;
+    margin: 0px 0px 10px 0px;
+    background-color: @button-bg;
+    border-radius: 6px;
+    children: [ prompt, entry ];
+}
+prompt {
+    text-color: @text-main;
+    padding: 0px 10px 0px 0px;
+}
+entry {
+    text-color: @text-main;
+    placeholder: "Search Apps...";
+    placeholder-color: #346739;
+}
+listview {
+    lines:      6;
+    columns:    1;
+    scrollbar:  false;
+    spacing:    5px;
+}
+element {
+    padding:       10px;
+    border-radius: 6px;
+    background-color: @button-bg;
+}
+element-text {
+    text-color: inherit;
+}
+element selected {
+    background-color: @accent;
+    text-color:       #ffffff;
+}

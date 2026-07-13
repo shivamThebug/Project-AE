@@ -1,0 +1,147 @@
+/* --- Global Settings --- */
+* {
+    border: none;
+    border-radius: 16px;
+    font-family: "SF Pro Display", "JetBrainsMono Nerd Font";
+    font-size: 13px;
+    margin: 0;
+    min-height: 0;
+    padding: 0;
+}
+
+window#waybar {
+    background: transparent;
+    margin: 0 100px;
+}
+
+/* --- Tooltips --- */
+tooltip {
+    background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 14px;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.2),
+        0 6px 16px rgba(0,0,0,0.2);
+}
+
+tooltip label {
+    color: #FFFFFF;
+    padding: 6px 10px;
+}
+
+/* --- Workspaces Module --- */
+#workspaces {
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+    margin: 0;
+    padding: 5px 5px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        0 6px 16px rgba(0,0,0,0.2);
+}
+
+#workspaces button {
+    padding: 0 10px;
+    margin: 0 2px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.65);
+    transition: all 200ms ease-in-out;
+}
+
+#workspaces button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+}
+
+#workspaces button.active {
+    min-width: 40px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.18));
+    color: #1a1a2e;
+    font-weight: 600;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+/* --- Clock Module --- */
+#clock {
+    font-weight: 500;
+    background: linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.05));
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    color: #FFFFFF;
+    padding: 3px 16px;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        0 4px 12px rgba(0,0,0,0.18);
+}
+
+/* --- Container Styling --- */
+.modules-center {
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+    color: #FFFFFF;
+    margin: 0;
+    padding: 5px 5px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        0 6px 16px rgba(0,0,0,0.2);
+}
+
+.modules-right {
+    margin: 0;
+    padding: 5px 5px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+    border-radius: 16px;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* --- Isolated Left Apps Box Group --- */
+#apps {
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+    margin: 0;
+    padding: 5px 5px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* --- Right Side Modules & Inner Left App Button --- */
+#pulseaudio,
+#network,
+#battery,
+#custom-power,
+#custom-app,
+#apps #custom-app,
+#backlight,
+#custom-swaync {
+    font-weight: 500;
+    background: linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.05));
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    color: #FFFFFF;
+    padding: 3px 16px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
+}
+
+#custom-power {
+    min-width: 10px;
+}
+
+/* --- Battery States --- */
+#battery.warning {
+    color: #FFD479;
+}
+
+#battery.critical {
+    background: rgba(255, 90, 90, 0.28);
+    border: 1px solid rgba(255, 90, 90, 0.42);
+    color: #FFFFFF;
+}

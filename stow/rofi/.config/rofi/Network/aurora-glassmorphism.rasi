@@ -1,0 +1,62 @@
+/* --- Wi-Fi Menu Theme (Neon/Cyberpunk) --- */
+* {
+    bg-main:       #0d0d1e;
+    border-color:  #00F2FE;
+    accent:        #4FACFE;
+    button-bg:     #121228;
+    text-main:     #E0E0FF;
+    background-color: transparent;
+    text-color:       @text-main;
+    font:             "SF Pro Display 13";
+}
+window {
+    background-color: @bg-main;
+    border:           1px;
+    border-color:     @border-color;
+    border-radius:    10px;
+    width:            700px;
+    location:         center;
+    anchor:           center;
+    margin:           20px 20px 0px 0px;
+}
+configuration {
+    show-icons: true;
+}
+mainbox {
+    children: [ inputbar, listview ];
+    padding: 10px;
+}
+inputbar {
+    padding: 10px;
+    margin: 0px 0px 10px 0px;
+    background-color: @button-bg;
+    border-radius: 6px;
+    children: [ prompt, entry ];
+}
+prompt {
+    text-color: #00F2FE;
+    padding: 0px 10px 0px 0px;
+}
+entry {
+    text-color: @text-main;
+    placeholder: "Search Networks...";
+    placeholder-color: #4C566A;
+}
+listview {
+    lines:      6;
+    columns:    1;
+    scrollbar:  false;
+    spacing:    5px;
+}
+element {
+    padding:       10px;
+    border-radius: 6px;
+    background-color: @button-bg;
+}
+element-text {
+    text-color: inherit;
+}
+element selected {
+    background-color: @accent;
+    text-color:       #050510;
+}

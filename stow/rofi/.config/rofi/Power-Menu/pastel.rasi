@@ -1,0 +1,103 @@
+/* ====================================================
+   WAYBAR PORT TO ROFI (FOGGY WHITE / LIGHT GLASS THEME)
+   ==================================================== */
+
+* {
+    /* --- Global Settings --- */
+    font:               "SF Pro Display, JetBrainsMono Nerd Font 13";
+    background-color:   transparent;
+    margin:             0;
+    padding:            0;
+
+    /* Main Container (From Waybar .modules-right / #workspaces) */
+    bg-container:       rgba(255, 255, 255, 0.45);
+    border-container:   rgba(0, 0, 0, 0.07);
+
+    /* Foggy Button Borders (From Waybar module/button borders) */
+    border-item:        rgba(0, 0, 0, 0.06);
+
+    /* Text Colors (Matched to Waybar's button / active button text) */
+    text-normal:        rgba(43, 43, 43, 0.6);
+    text-active:        #1A1A2E;
+
+    /* Status Colors (From Waybar #battery.warning / #battery.critical) */
+    color-warning:      #B8801A;
+    color-critical:     #8C2F26;
+    color-critical-bg:  rgba(200, 60, 50, 0.20);
+    color-critical-brd: rgba(200, 60, 50, 0.35);
+}
+
+window {
+    background-color:  @bg-container;
+    border:            1px;
+    border-color:      @border-container;
+    border-radius:     16px;
+    width:             320px;
+
+    location:          northeast;
+    anchor:            northeast;
+    margin:            20px 20px 0px 0px;
+}
+
+mainbox {
+    children:          [ listview ];
+    padding:           14px;
+    background-color:  transparent;
+}
+
+listview {
+    lines:             5;
+    columns:           1;
+    scrollbar:         false;
+    spacing:           10px;
+    background-color:  transparent;
+}
+
+element {
+    padding:           10px 18px;
+
+    /* Foggy/light effect: matches Waybar's rgba(0,0,0,0.04) button baseline,
+       lifted with a soft white gradient like the module backgrounds */
+    background-image:  linear-gradient(to bottom, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.35));
+
+    border:            1px;
+    border-color:      @border-item;
+    border-radius:     10px;
+    text-color:        @text-normal;
+}
+
+element-text {
+    background-color:  transparent;
+    text-color:        inherit;
+    vertical-align:    0.5;
+    font-weight:       500;
+}
+
+element-icon {
+    background-color:  transparent;
+    text-color:        inherit;
+    size:              1.2em;
+}
+
+element selected {
+    /* Matched precisely to your "#workspaces button.active" */
+    background-image:  linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.55));
+    border:            1px;
+    border-color:      rgba(255, 255, 255, 0.9);
+    text-color:        @text-active;
+}
+
+element-text selected {
+    font-weight:       600;
+}
+
+/* --- Special Optional States (from Waybar #battery states) --- */
+element urgent {
+    background-color:  @color-critical-bg;
+    border-color:      @color-critical-brd;
+    text-color:        @color-critical;
+}
+
+element active {
+    text-color:        @color-warning;
+}

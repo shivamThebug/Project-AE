@@ -1,0 +1,41 @@
+/* --- Screenshot Menu Theme (Glassmorphism) --- */
+* {
+    border-color:      rgba(255, 255, 255, 0.16);
+    accent:            rgba(255, 255, 255, 0.35);
+    button-bg:         rgba(255, 255, 255, 0.08);
+    text-main:         #FFFFFF;
+    background-color:  transparent;
+    text-color:        @text-main;
+    font:              "SF Pro Display 13";
+}
+window {
+    background-color: rgba(20, 20, 35, 0.55);
+    border:           1px;
+    border-color:     @border-color;
+    border-radius:    16px;
+    width:            280px;
+    location:         center;
+    anchor:           center;
+}
+mainbox {
+    children: [ listview ];
+    padding: 10px;
+}
+listview {
+    lines:      3;
+    columns:    1;
+    scrollbar:  false;
+    spacing:    5px;
+}
+element {
+    padding:          10px;
+    border-radius:    10px;
+    background-color: rgba(255, 255, 255, 0.06);
+}
+element-text {
+    text-color: inherit;
+}
+element selected {
+    background-color: rgba(255, 255, 255, 0.35);
+    text-color:       #1a1a2e;
+}

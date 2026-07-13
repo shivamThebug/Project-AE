@@ -1,0 +1,202 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# ==========================================================
+# Theme Switcher — Waybar + Rofi + Network menu
+# ==========================================================
+
+# --- Paths ---
+# Waybar theme sources live directly under ~/.config/waybar/themes
+WAYBAR_SRC="$HOME/.config/waybar/themes"
+# Rofi theme sources live directly under ~/.config/rofi as per-type
+# subfolders (Network/, Power-Menu/, Screenshot/, Theme-switcher/),
+# each holding one <theme-name>.rasi file per waybar theme.
+ROFI_SRC="$HOME/.config/rofi"
+WAYBAR_DST="$HOME/.config/waybar"
+ROFI_DST="$HOME/.config/rofi"
+NET_DST="$HOME/.config/network"
+STATE_FILE="$WAYBAR_DST/.current_theme"
+LOCK_FILE="/tmp/.theme-switcher.lock"
+LOG_FILE="$WAYBAR_DST/.theme-switcher.log"
+
+# --- Helpers ---
+log() { echo "[$(date '+%H:%M:%S')] $*" >>"$LOG_FILE"; }
+
+notify() {
+    # $1 = title, $2 = message, $3 = icon (optional)
+    log "$1: $2"
+    command -v notify-send >/dev/null 2>&1 && notify-send "$1" "$2" -i "${3:-dialog-information}" || true
+}
+
+die() {
+    notify "Theme Switcher Error" "$1" "dialog-error"
+    exit 1
+}
+
+require_cmd() {
+    command -v "$1" >/dev/null 2>&1 || die "Required command '$1' not found in PATH."
+}
+
+# --- Preconditions ---
+require_cmd rofi
+require_cmd waybar
+mkdir -p "$WAYBAR_DST" "$ROFI_DST" "$NET_DST"
+touch "$LOG_FILE"
+
+# --- Prevent overlapping runs (e.g. double keybind press) ---
+exec 9>"$LOCK_FILE"
+if ! flock -n 9; then
+    notify "Theme Switcher" "Already running — ignoring extra trigger." "dialog-warning"
+    exit 0
+fi
+
+# --- Report unexpected failures with context ---
+trap 'die "Failed at line $LINENO. See $LOG_FILE for details."' ERR
+
+# --- Determine active theme-switcher rofi style ---
+ROFI_MENU_THEME="$ROFI_DST/style.rasi"
+if [ ! -f "$ROFI_MENU_THEME" ]; then
+    ROFI_MENU_THEME="$ROFI_SRC/Theme-switcher/frosted.rasi"
+fi
+
+# --- Validate current style isn't broken; fall back if so ---
+ROFI_CHECK=$(rofi -theme "$ROFI_MENU_THEME" -no-config -dump-theme 2>&1 || true)
+if [[ "$ROFI_CHECK" == *"Failed to parse theme"* || "$ROFI_CHECK" == *"error"* || -z "$ROFI_CHECK" ]]; then
+    log "Active rofi style theme looked broken, falling back to default frosted.rasi"
+    ROFI_MENU_THEME="$ROFI_SRC/Theme-switcher/frosted.rasi"
+fi
+[ -f "$ROFI_MENU_THEME" ] || die "No usable rofi menu theme found (checked style.rasi and frosted.rasi)."
+
+# --- Build theme list safely (no `ls` parsing) ---
+[ -d "$WAYBAR_SRC" ] || die "Waybar themes folder not found: $WAYBAR_SRC"
+
+shopt -s nullglob
+CSS_FILES=("$WAYBAR_SRC"/*.css)
+shopt -u nullglob
+[ "${#CSS_FILES[@]}" -gt 0 ] || die "No .css theme files found in $WAYBAR_SRC"
+
+THEMES=()
+for f in "${CSS_FILES[@]}"; do
+    THEMES+=("$(basename "$f" .css)")
+done
+IFS=$'\n' THEMES_SORTED=($(sort <<<"${THEMES[*]}")); unset IFS
+
+# --- Launch selection menu ---
+CHOICE=$(printf '%s\n' "${THEMES_SORTED[@]}" | rofi -dmenu -i -p " Theme:" \
+    -theme "$ROFI_MENU_THEME" \
+    -theme-str 'window { width: 25%; } listview { lines: 6; }') || true
+
+[ -z "$CHOICE" ] && { log "No theme selected, exiting."; exit 0; }
+
+# --- Guard against a mistyped/injected selection ---
+VALID=false
+for t in "${THEMES_SORTED[@]}"; do
+    [ "$t" = "$CHOICE" ] && VALID=true && break
+done
+[ "$VALID" = true ] || die "Selected theme '${CHOICE}' does not match any known theme."
+
+SELECTED_CSS="$WAYBAR_SRC/${CHOICE}.css"
+SELECTED_CONFIG="$WAYBAR_SRC/config.jsonc"
+[ -f "$SELECTED_CSS" ] || die "Waybar theme not found: ${CHOICE}.css"
+
+# --- Backup existing configs (timestamped, never clobbers prior backup) ---
+backup_file() {
+    local f="$1"
+    if [ -f "$f" ] && [ ! -L "$f" ]; then
+        cp "$f" "${f}.bak.$(date +%Y%m%d%H%M%S)" 2>/dev/null || true
+    fi
+}
+backup_file "$WAYBAR_DST/style.css"
+backup_file "$WAYBAR_DST/config.jsonc"
+backup_file "$ROFI_DST/style.rasi"
+backup_file "$ROFI_DST/screenshot.rasi"
+backup_file "$ROFI_DST/power_menu.rasi"
+backup_file "$NET_DST/wifi.rasi"
+
+# --- Link waybar files ---
+ln -sf "$SELECTED_CSS" "$WAYBAR_DST/style.css"
+[ -f "$SELECTED_CONFIG" ] && ln -sf "$SELECTED_CONFIG" "$WAYBAR_DST/config.jsonc"
+
+# --- Figure out which rofi suffix actually has files ---
+# e.g. "aurora-glassmorphism" -> "aurora-glassmorphism", "aurora"
+CANDIDATES=("$CHOICE")
+STRIPPED="$CHOICE"
+for SUFFIX in "-glassmorphism" "-dark" "-light" "-blur" "-transparent"; do
+    if [[ "$STRIPPED" == *"$SUFFIX" ]]; then
+        STRIPPED="${STRIPPED/$SUFFIX/}"
+        CANDIDATES+=("$STRIPPED")
+    fi
+done
+
+# Each menu "TYPE" corresponds to a real subfolder under ROFI_SRC,
+# and inside that subfolder each theme is just "<theme-name>.rasi"
+# (e.g. Theme-switcher/aurora-glassmorphism.rasi).
+declare -A ROFI_SUBDIR=(
+    [style]="Theme-switcher"
+    [screenshot]="Screenshot"
+    [power_menu]="Power-Menu"
+    [wifi]="Network"
+)
+
+find_rofi_src() {
+    local TYPE="$1"
+    local SUBDIR="${ROFI_SUBDIR[$TYPE]}"
+    local CAND
+    for CAND in "${CANDIDATES[@]}"; do
+        if [ -f "$ROFI_SRC/${SUBDIR}/${CAND}.rasi" ]; then
+            echo "$ROFI_SRC/${SUBDIR}/${CAND}.rasi"
+            return 0
+        fi
+    done
+    return 1
+}
+
+# --- Link rofi theme files safely ---
+for TYPE in style screenshot power_menu wifi; do
+    case "$TYPE" in
+        wifi) DST="$NET_DST/wifi.rasi" ;;
+        *)    DST="$ROFI_DST/${TYPE}.rasi" ;;
+    esac
+
+    SRC=$(find_rofi_src "$TYPE" || true)
+    if [ -n "$SRC" ] && [ -f "$SRC" ]; then
+        ln -sf "$SRC" "$DST"
+        log "Linked ${TYPE} -> $SRC"
+    else
+        DEFAULT="$ROFI_SRC/${ROFI_SUBDIR[$TYPE]}/frosted.rasi"
+        if [ -f "$DEFAULT" ]; then
+            ln -sf "$DEFAULT" "$DST"
+            notify "Theme Switcher" "No matching rofi ${TYPE} theme for '${CHOICE}', using default." "dialog-warning"
+        else
+            notify "Theme Error" "No rofi ${TYPE} theme found (matching or default)." "dialog-error"
+        fi
+    fi
+done
+
+# --- Save state ---
+echo "$CHOICE" > "$STATE_FILE"
+
+# --- Release the lock before spawning a detached process ---
+# Without this, the backgrounded waybar process below inherits fd 9 and
+# keeps the flock held forever, making every future run think a switch
+# is still "in progress".
+exec 9>&-
+
+# --- Restart waybar cleanly ---
+if pgrep -x waybar >/dev/null 2>&1; then
+    killall waybar 2>/dev/null || true
+    # wait for it to actually exit instead of a fixed sleep guess
+    for _ in $(seq 1 20); do
+        pgrep -x waybar >/dev/null 2>&1 || break
+        sleep 0.1
+    done
+fi
+
+# Launch detached so it survives even if this script's shell/session ends
+setsid waybar -c "$WAYBAR_DST/config.jsonc" -s "$WAYBAR_DST/style.css" \
+    >>"$LOG_FILE" 2>&1 < /dev/null &
+disown
+
+notify "Theme Switcher" "Switched everything to ${CHOICE}" "preferences-desktop-theme"
+log "Theme switch to '${CHOICE}' completed successfully."

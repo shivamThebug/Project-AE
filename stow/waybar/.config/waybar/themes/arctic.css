@@ -1,0 +1,107 @@
+/* --- Global Settings --- */
+* {
+border: none;
+border-radius: 10px;
+font-family: "SF Pro Display", "JetBrainsMono Nerd Font";
+font-size: 13px;
+margin: 0;
+min-height: 0;
+padding: 0;
+}
+window#waybar {
+background: transparent;
+margin: 0 100px;
+}
+/* --- Tooltips --- */
+tooltip {
+background: #2E3440;
+border: 3px solid #4C566A;
+border-radius: 10px;
+}
+tooltip label {
+color: #ECEFF4;
+padding: 6px 10px;
+}
+/* --- Workspaces Module --- */
+#workspaces {
+background: #2E3440;
+margin: 0;
+padding: 5px 5px;
+border: 3px solid #4C566A;
+}
+#workspaces button {
+padding: 0 10px;
+margin: 0 2px;
+border-radius: 5px;
+background: #3B4252;
+color: #D8DEE9;
+transition: all 180ms ease-in-out;
+}
+#workspaces button:hover {
+background: #434C5E;
+}
+#workspaces button.active {
+min-width: 40px;
+border-radius: 6px;
+background: #88C0D0;
+color: #2E3440;
+font-weight: 600;
+}
+/* --- Clock Module --- */
+#clock {
+font-weight: 500;
+background-color: #3B4252;
+border-radius: 5px;
+color: #88C0D0;
+padding: 3px 16px;
+border: none;
+}
+/* --- Container Styling --- */
+.modules-center {
+background-color: #2E3440;
+color: #81A1C1;
+margin: 0;
+padding: 5px 5px;
+border: 3px solid #4C566A;
+}
+.modules-right {
+margin: 0;
+padding: 5px 5px;
+border: 3px solid #4C566A;
+background: #2E3440;
+}
+/* --- Isolated Left Apps Box Group --- */
+#apps {
+background-color: #2E3440;
+margin: 0;
+padding: 5px 5px;
+border: 3px solid #4C566A;
+border-radius: 10px;
+}
+/* --- Right Side Modules & Inner Left App Button --- */
+#pulseaudio,
+#network,
+#battery,
+#custom-power,
+#custom-app,
+#apps #custom-app,
+#backlight,
+#custom-swaync {
+font-weight: 500;
+background-color: #3B4252;
+border-radius: 5px;
+color: #D8DEE9;
+padding: 3px 16px;
+border: none;
+}
+#custom-power {
+min-width: 10px;
+}
+/* --- Battery States --- */
+#battery.warning {
+color: #EBCB8B;
+}
+#battery.critical {
+background-color: #BF616A;
+color: #ECEFF4;
+}

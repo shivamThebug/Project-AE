@@ -1,0 +1,73 @@
+/* ====================================================
+   WAYBAR-MATCHING ROFI POWER MENU THEME
+   ==================================================== */
+
+* {
+    /* Color Palette matching your Waybar configuration */
+    bg-window:      #2E3440;
+    border-accent:  #4C566A;
+    btn-normal:     #3B4252;
+    btn-active:     #88C0D0;
+    
+    text-normal:    #D8DEE9;
+    text-active:    #2E3440;
+
+    background-color: transparent;
+    font:            "SF Pro Display, JetBrainsMono Nerd Font 13";
+}
+
+window {
+    background-color: @bg-window;
+    border:           3px;
+    border-color:     @border-accent;
+    border-radius:    10px;        
+    width:            300px;       
+    
+    location:         northeast;
+    anchor:           northeast;
+    margin:           20px 20px 0px 0px;
+}
+
+mainbox {
+    children:         [ listview ];
+    padding:          10px;
+    background-color: transparent;
+}
+
+listview {
+    lines:            5;
+    columns:          1;
+    scrollbar:        false;
+    spacing:          6px;
+    background-color: transparent;
+}
+
+/* --- Unselected Button State --- */
+element {
+    padding:          8px 16px;    
+    background-color: @btn-normal;
+    border-radius:    5px;
+    text-color:       @text-normal;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color:       inherit;
+    size:             1.2em;
+}
+
+/* --- Selected Button State (Hover/Active) --- */
+element selected {
+    background-color: @btn-active;
+    text-color:       @text-active;
+}
+
+element-text selected {
+    font-weight:      600;
+}

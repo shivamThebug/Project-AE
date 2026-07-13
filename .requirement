@@ -1,0 +1,43 @@
+# Hyprland Ecosystem
+hyprland
+hyprlock
+hypridle
+hyprpaper
+waybar
+rofi-lbonn-wayland
+swaync
+waypaper
+eww
+nwg-bar
+nwg-look
+
+# Terminal & Shell
+kitty
+fish
+btop
+cava
+
+# Apps
+dolphin
+chromium
+pavucontrol
+brightnessctl
+playerctl
+wireplumber
+pipewire-pulse
+networkmanager
+
+# Screenshot
+grim
+slurp
+wl-clipboard
+jq
+
+# Fonts
+ttf-jetbrains-mono-nerd
+noto-fonts-emoji
+ttf-font-awesome
+
+# AUR
+hyprlauncher
+hyprshutdown
