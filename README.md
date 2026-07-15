@@ -55,7 +55,7 @@ stow/
 └── nwg-look/    # GTK settings
 ```
 
-## Quick Install
+## Installation Guide
 
 ```bash
 git clone https://github.com/shivamThebug/Project-AE.git
