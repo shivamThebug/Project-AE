@@ -10,7 +10,7 @@ function keybinds.setup(prog)
     hl.bind("SUPER + RETURN", hl.dsp.exec_cmd(terminal))
     hl.bind("SUPER + T",      hl.dsp.exec_cmd("~/.config/rofi/scripts/theme-switcher"))
     hl.bind("SUPER + B",      hl.dsp.exec_cmd("chromium"))
-    hl.bind("SUPER + SPACE",  hl.dsp.exec_cmd("rofi -show drun -theme /home/shivam/.config/rofi/style.rasi"))
+    hl.bind("SUPER + SPACE",  hl.dsp.exec_cmd("rofi -show drun -theme ~/.config/rofi/style.rasi"))
     hl.bind("SUPER + W",      hl.dsp.exec_cmd("waypaper"))
     hl.bind("Print", hl.dsp.exec_cmd("~/.config/rofi/scripts/rofi-screenshot"))
 

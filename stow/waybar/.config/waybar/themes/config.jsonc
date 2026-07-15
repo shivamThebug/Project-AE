@@ -37,7 +37,6 @@
     },
 
     "backlight": {
-    "device": "intel_backlight",
     "format": "{percent}% {icon}",
     "format-icons": ["󰃞", "󰃟", "󰃝", "󰃠", "󰅶"]
     },
@@ -78,7 +77,6 @@
         "ignored-sinks": ["Easy Effects Sink"]
     },
     "network": {
-        "interface": "wlan0",
         "format": "󰀝 Airplane Mode", 
         "format-wifi": "{icon} {essid} ({signalStrength}%)",
         "format-ethernet": "󰊗 {ipaddr}/{cidr}",
@@ -102,12 +100,12 @@
     "custom/app": {
         "format": "Apps",
         "tooltip": false,
-        "on-click": "rofi -show drun -theme /home/shivam/.config/rofi/style.rasi"
+        "on-click": "bash -c 'rofi -show drun -theme ~/.config/rofi/style.rasi'"
     },
     "custom/power": {
         "format": "⏻",
         "tooltip": false,
-        "on-click": "/home/shivam/.config/rofi/scripts/power-menu.sh"
+        "on-click": "bash -c '~/.config/rofi/scripts/power-menu.sh'"
     },
 
 
