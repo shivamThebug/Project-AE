@@ -1,41 +1,42 @@
+
 # Project-AE Dotfiles
 
 Hyprland dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 ## Preview
+## Preview
 
 <div align="center">
 
-<img src="assets/screenshots/preview-1.png" width="700">
+<img src="https://github.com/user-attachments/assets/da72d16d-c09d-472b-a39e-5d9845a388cb" width="700">
 
 * *
 
 <br>
 
-<img src="assets/screenshots/preview-2.png" width="700">
+<img src="https://github.com/user-attachments/assets/4a17cbba-eece-4141-b0a9-d7c47b8f16d8" width="700">
 
 * *
 
 <br>
 
-<img src="assets/screenshots/preview-3.png" width="700">
+<img src="https://github.com/user-attachments/assets/a547811d-32fe-4510-a300-7e243238e260" width="700">
 
 * *
 
 <br>
 
-<img src="assets/screenshots/preview-4.png" width="700">
+<img src="https://github.com/user-attachments/assets/1e65f1eb-69a8-417b-9d5b-b9a9f771f763" width="700">
 
 * *
 
 <br>
 
-<img src="assets/screenshots/preview-5.png" width="700">
+<img src="https://github.com/user-attachments/assets/4af27a2e-458d-46aa-b5ba-57717a03daeb" width="700">
 
 * *
 
 </div>
-
 ## Structure
 
 ```
