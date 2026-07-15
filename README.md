@@ -58,6 +58,11 @@ stow/
 ## Quick Install
 
 ```bash
+git clone https://github.com/shivamThebug/Project-AE.git
+cd Project-AE
+```
+```bash
+chmod +x ./install.sh
 ./install.sh
 ```
 
