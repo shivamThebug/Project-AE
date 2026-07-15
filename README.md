@@ -8,31 +8,31 @@ Hyprland dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 <img src="assets/screenshots/preview-1.png" width="700">
 
-*shivam@archlinux*
+
 
 <br>
 
 <img src="assets/screenshots/preview-2.png" width="700">
 
-*shivam@archlinux*
+
 
 <br>
 
 <img src="assets/screenshots/preview-3.png" width="700">
 
-*shivam@archlinux*
+
 
 <br>
 
 <img src="assets/screenshots/preview-4.png" width="700">
 
-*shivam@archlinux*
+
 
 <br>
 
 <img src="assets/screenshots/preview-5.png" width="700">
 
-*shivam@archlinux*
+
 
 </div>
 
