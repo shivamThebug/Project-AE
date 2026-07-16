@@ -57,16 +57,16 @@ trap 'die "Failed at line $LINENO. See $LOG_FILE for details."' ERR
 # --- Determine active theme-switcher rofi style ---
 ROFI_MENU_THEME="$ROFI_DST/style.rasi"
 if [ ! -f "$ROFI_MENU_THEME" ]; then
-    ROFI_MENU_THEME="$ROFI_SRC/Theme-switcher/frosted.rasi"
+    ROFI_MENU_THEME="$ROFI_SRC/Theme-switcher/Glass-v2.rasi"
 fi
 
 # --- Validate current style isn't broken; fall back if so ---
 ROFI_CHECK=$(rofi -theme "$ROFI_MENU_THEME" -no-config -dump-theme 2>&1 || true)
 if [[ "$ROFI_CHECK" == *"Failed to parse theme"* || "$ROFI_CHECK" == *"error"* || -z "$ROFI_CHECK" ]]; then
-    log "Active rofi style theme looked broken, falling back to default frosted.rasi"
-    ROFI_MENU_THEME="$ROFI_SRC/Theme-switcher/frosted.rasi"
+    log "Active rofi style theme looked broken, falling back to default Glass-v2.rasi"
+    ROFI_MENU_THEME="$ROFI_SRC/Theme-switcher/Glass-v2.rasi"
 fi
-[ -f "$ROFI_MENU_THEME" ] || die "No usable rofi menu theme found (checked style.rasi and frosted.rasi)."
+[ -f "$ROFI_MENU_THEME" ] || die "No usable rofi menu theme found (checked style.rasi and Glass-v2.rasi)."
 
 # --- Build theme list safely (no `ls` parsing) ---
 [ -d "$WAYBAR_SRC" ] || die "Waybar themes folder not found: $WAYBAR_SRC"
@@ -119,7 +119,7 @@ ln -sf "$SELECTED_CSS" "$WAYBAR_DST/style.css"
 [ -f "$SELECTED_CONFIG" ] && ln -sf "$SELECTED_CONFIG" "$WAYBAR_DST/config.jsonc"
 
 # --- Figure out which rofi suffix actually has files ---
-# e.g. "aurora-glassmorphism" -> "aurora-glassmorphism", "aurora"
+# e.g. "aurora-glassmorphism" -> "aurora-glassmorphism", "aurora" (now renamed to "cryberpunk")
 CANDIDATES=("$CHOICE")
 STRIPPED="$CHOICE"
 for SUFFIX in "-glassmorphism" "-dark" "-light" "-blur" "-transparent"; do
@@ -131,7 +131,7 @@ done
 
 # Each menu "TYPE" corresponds to a real subfolder under ROFI_SRC,
 # and inside that subfolder each theme is just "<theme-name>.rasi"
-# (e.g. Theme-switcher/aurora-glassmorphism.rasi).
+# (e.g. Theme-switcher/cryberpunk.rasi).
 declare -A ROFI_SUBDIR=(
     [style]="Theme-switcher"
     [screenshot]="Screenshot"
@@ -164,7 +164,7 @@ for TYPE in style screenshot power_menu wifi; do
         ln -sf "$SRC" "$DST"
         log "Linked ${TYPE} -> $SRC"
     else
-        DEFAULT="$ROFI_SRC/${ROFI_SUBDIR[$TYPE]}/frosted.rasi"
+        DEFAULT="$ROFI_SRC/${ROFI_SUBDIR[$TYPE]}/Glass-v2.rasi"
         if [ -f "$DEFAULT" ]; then
             ln -sf "$DEFAULT" "$DST"
             notify "Theme Switcher" "No matching rofi ${TYPE} theme for '${CHOICE}', using default." "dialog-warning"
